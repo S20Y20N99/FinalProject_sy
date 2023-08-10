@@ -51,16 +51,16 @@ $(function() {
             return;
         }
 
-        var checkArray = [];
+        var checkArray = "";
 
         $('input:checkbox[name=comStImgCB]:checked').each(function() {
-            checkArray.push($(this).attr("id"));
+            checkArray += $(this).attr("id")+ ",";
         });
         
-        $("#checkedCompare").val(checkArray);
-
-        // Convert the array into a comma-separated string
-        var paramString = encodeURIComponent(checkArray.join(','));
+     	
+        alert(checkArray);
+        
+        $("#checkedCompare").attr("value", checkArray);
 
         // Append this string to the action URL of your form
         /* $("#userForm").attr("action", "compareView.action?st_num=" + paramString); */

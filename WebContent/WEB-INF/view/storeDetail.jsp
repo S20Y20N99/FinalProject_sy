@@ -31,49 +31,6 @@ String cp = request.getContextPath();
 	src="http://code.jquery.com/jquery.min.js"></script>
 
 <script type="text/javascript">
-	$(function()
-	{
-		$(".left_sub_menu").hide();
-		$(".has_sub").click(function()
-		{
-			$(".left_sub_menu").fadeToggle(300);
-			if ($('#checkOverlay').val() == "true")
-			{
-				$('.overlay').css("position", "fixed");
-				$('.overlay').css("width", "0%");
-				$('.overlay').css("height", "0%");
-				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
-				$('.overlay').css("z-index", "0");
-				$('#checkOverlay').attr("value", "false");
-			} else
-			{
-				$('.overlay').css("position", "fixed");
-				$('.overlay').css("width", "100%");
-				$('.overlay').css("height", "100%");
-				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
-				$('.overlay').css("z-index", "3");
-				$('.overlay').css("margin-top", "1.011vh");
-				$('#checkOverlay').attr("value", "true");
-			}
-
-		});
-		// 왼쪽메뉴 드롭다운
-		$(".sub_menu ul.small_menu").hide();
-		$(".sub_menu ul.big_menu").click(function()
-		{
-			$("ul", this).slideToggle(300);
-		});
-		// 외부 클릭 시 좌측 사이드 메뉴 숨기기
-		$('.overlay').on('click', function()
-		{
-			$('.left_sub_menu').fadeOut();
-			$('.overlay').css("position", "fixed");
-			$('.overlay').css("width", "0%");
-			$('.overlay').css("height", "0%");
-			$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
-			$('.overlay').css("z-index", "0");
-			$('#checkOverlay').attr("value", "false");
-		});
 
 		/// 신고하기 버튼 눌렀을 때
 		$(".repBtn").click(function()
@@ -336,57 +293,8 @@ String cp = request.getContextPath();
 
 			<div id="column">
 
-				<!-- 왼쪽 메뉴 배너 -->
-				<!-- 왼쪽 메뉴 -->
-				<div class="left side-menu">
-					<div class="sidebar-inner">
-						<div id="sidebar-menu">
-							<ul class="has_sub_menu">
-								<li class="has_sub"><a href="javascript:void(0);"
-									class="waves-effect"> <i class="fas fa-bars"
-										style="color: #fff"></i>
-								</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-
-				<!-- 왼쪽 서브 메뉴 -->
-				<div class="left_sub_menu">
-					<div class="sub_menu">
-						<h2>MENU</h2>
-						<ul class="big_menu">
-							<li>가게 리스트<i class="arrow fas fa-angle-right"></i></li>
-
-							<ul class="small_menu">
-								<li><a href="#" class="small_menuA">가게1</a></li>
-								<li><a href="#" class="small_menuA">가게2</a></li>
-								<li><a href="#" class="small_menuA">가게3</a></li>
-								<li><a href="#" class="small_menuA">가게4</a></li>
-							</ul>
-						</ul>
-						<ul class="big_menu">
-							<li>접수 내역<i class="arrow fas fa-angle-right"></i></li>
-							<ul class="small_menu">
-								<li><a href="#" class="small_menuA">소메뉴2-1</a></li>
-								<li><a href="#" class="small_menuA">소메뉴2-2</a></li>
-							</ul>
-						</ul>
-						<ul class="big_menu">
-							<li>경고 내역</li>
-						</ul>
-						<ul class="big_menu">
-							<li>새로운 가게 등록 신청</i></li>
-						</ul>
-					</div>
-				</div>
-
-				<div class="overlay">
-					<input type="hidden" id="checkOverlay" value="false">
-				</div>
-
+				<c:import url="sideBar.jsp"></c:import>
 			</div>
-
 
 			<div class="mainBody">
 

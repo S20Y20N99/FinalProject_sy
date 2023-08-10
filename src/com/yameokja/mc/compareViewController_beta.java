@@ -2,6 +2,7 @@ package com.yameokja.mc;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,7 +21,7 @@ public class compareViewController_beta
 	private SqlSession sqlSession;
 
 	@RequestMapping(value="/compareView.action", method = RequestMethod.POST)
-	public String stDetail(HttpServletRequest request, Model model)
+	public String stDetail(HttpServletRequest request, Model model, String checkedCompare)
 	{
 		HttpSession session = request.getSession();
 		String user_num = (String)session.getAttribute("user_num");
@@ -43,20 +44,20 @@ public class compareViewController_beta
 		
 		model.addAttribute("user", user);
 		
-		String[] compareStnumList = request.getParameterValues("checkedCompare");
+		System.out.println(checkedCompare.substring(0, checkedCompare.length() - 1));
+		String tmpStr = checkedCompare.substring(0, checkedCompare.length() - 1);
+		String[] comparedStore = tmpStr.split(",");
 		
-		ArrayList<Integer> stnumList = null;
+		List<Integer> stnumList = new ArrayList<Integer>();
 		
-		String[] regionCbList = compareStnumList[0].split(",");
-		
-		for (int i = 0; i < regionCbList.length; i++)
+		for (String st_num : comparedStore)
 		{
-			stnumList.add(Integer.parseInt(regionCbList[i]));
+			stnumList.add(Integer.parseInt(st_num));
+			/* System.out.println(st_num); */
 		}
+		/* System.out.println(comparedStore); */
 		
-		System.out.println(stnumList);										//--가게 번호 리스트
-		
-		ArrayList<StoreDetailDTO> stores = dao.store(stnumList);			//-- 비교함에서 선택한 가게 정보 리스트
+		ArrayList<StoreDetailDTO> stores = dao.store(stnumList);
 		
 		ArrayList<StoreOpencloseDTO> openCloses = dao.openClose(stnumList);	//-- 비교함에서 선택한 가게 영업정보 리스트
 			
@@ -181,7 +182,7 @@ public class compareViewController_beta
 		}
 		*/
 		
-		result = "/WEB-INF/view/compareView_sy.jsp";
+		result = "/WEB-INF/view/compareView-beta.jsp";
 		
 		return result;
 	}
