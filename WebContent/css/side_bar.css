@@ -2,7 +2,7 @@
 
 .side-menu 
 	{
-		top: 5.3%;
+		top: 50px;
 		width: 5vw;
 		z-index: 10;
 		background: #ef6351;
@@ -31,7 +31,7 @@
 	.left_sub_menu 
 	{
 		position: fixed;
-		top: 5.3%;
+		top: 50px;
 		width: 18vw;
 		z-index: 10;
 		left: 4.6vw;
