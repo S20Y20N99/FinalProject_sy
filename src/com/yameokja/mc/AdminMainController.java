@@ -7,21 +7,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
+
 import org.apache.ibatis.session.SqlSession;
 
 @Controller
@@ -327,8 +320,12 @@ public class AdminMainController
 		
 		/* int admin_num = (Integer)session.getAttribute("admin_num"); */
 		
-		int in_apply_num = Integer.parseInt(request.getParameter("in_apply_num"));
+		int out_apply_num = Integer.parseInt(request.getParameter("out_apply_num"));
 		String admin_num = (String)session.getAttribute("admin_num");
+		
+		IAdminFindDAO afdao = sqlSesion.getMapper(IAdminFindDAO.class);
+		
+		model.addAttribute("out", afdao.outSearch(out_apply_num));
 		
 		/*
 		IAdminMainDAO amdao = sqlSesion.getMapper(IAdminMainDAO.class);
@@ -434,5 +431,27 @@ public class AdminMainController
 		 * 
 		 * return result; }
 		 */
+		
+		@RequestMapping(value="/inapplysend.action", method= {RequestMethod.GET, RequestMethod.POST})
+		public String inApplySend(Model model, HttpServletRequest request)
+		{
+			String result = "";
+			HttpSession session = request.getSession();
+			
+			IAdminFindDAO fdao = sqlSesion.getMapper(IAdminFindDAO.class);
+			IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
+			
+			
+			int admin_num = Integer.parseInt((String)session.getAttribute("admin_num"));
+			
+			int in_apply_num = Integer.parseInt(request.getParameter("in_apply_num"));
+			
+			fdao.inprocess(in_apply_num, admin_num);
+			
+			model.addAttribute("admin_name", dao.searchNum((String)session.getAttribute("admin_num"), "num").getAdmin_name());
+			
+			return result;
+		}
+		
 	
 }

@@ -64,10 +64,16 @@
 		
 		$(".inTd").click(function()
 		{
-			var inNum = $(this).attr("id");
-			/* alert(inNum); */
+			var idNum = $(this).attr("id");
+			/* alert(idNum); */
 			var state = $(this).parent().attr('id');
-			$(location).attr("href","inapplyform.action?in_apply_num="+inNum+"&state="+state);
+			var catValue = $(this).siblings("td:first-child").text();
+			//alert(catValue);
+			
+			if(catValue=="등록")
+				$(location).attr("href","inapplyform.action?in_apply_num="+idNum+"&state="+state);
+			else
+				$(location).attr("href","outapplyform.action?out_apply_num="+idNum+"&state="+state);
 		});
 		
 	});
@@ -244,7 +250,7 @@
 						</thead>
 						<tbody>
 							<c:forEach var="inout" items="${inoutList }" begin="0" end="4">
-							<tr>
+							<tr id="${inout.state }">
 								<c:if test="${inout.cat eq '등록' }">
 								<td style="background-color: green;" id="${inout.report_num }">${inout.cat }</td>
 								<td class="inTd" id="${inout.report_num }">${inout.reg_date }</td>

@@ -230,24 +230,58 @@ input[type="radio"] {
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="<%=cp %>/js/jquery-ui.js"></script>
 <script type="text/javascript">
-	function displayAndSetFileName() 
-	{
-	    var fileInput = document.getElementById("file");
-	    var uploadNameInput = document.getElementById("upload-name");
-	
-	    if (fileInput.files.length > 0) {
-	        var uploadedFileName = fileInput.files[0].name;
-	        uploadNameInput.value = uploadedFileName;
-	    }
-	    else {
-	    	uploadNameInput.value = null;
-	    }
-	}
 	
 	$(function()
 	{
+		function displayAndSetFileName() 
+		{
+		    var fileInput = document.getElementById("file");
+		    var uploadNameInput = document.getElementById("upload-name");
 		
+		    if (fileInput.files.length > 0) {
+		        var uploadedFileName = fileInput.files[0].name;
+		        uploadNameInput.value = uploadedFileName;
+		    }
+		    else {
+		    	uploadNameInput.value = null;
+		    }
+		}
+		
+		$(".check").change(function() 
+		{
+		    if ($(this).is(":checked")) 
+		    {
+		       if ($(this).val() == "true")
+		          $(".rejText").css("display", "flex");
+		       else
+		          $(".rejText").css("display", "none");
+		    }
+		});
+		
+		$(".sendBtn").click(function()
+		{
+			//alert("확인");
+			if ($(".check:checked").length == 0)
+			{
+			   alert("승인 또는 반려를 선택해주세요.");
+			   return;
+			}
+			else if($(".check:checked").val() == "true")
+			{
+			   if($("#myTextarea").val().trim() == "" || $("#myTextarea").val().trim() == null)
+			   {
+			      alert("반려사유를 입력해주셔야 합니다.");
+			      return;
+			   }
+			      
+			}
+			
+			
+		});
 	});
+	
+	
+	
    
 </script>
 </head>
@@ -260,7 +294,7 @@ input[type="radio"] {
 	
 	<div class="center">
 		<div class="head">
-			<h1>사업장 폐업 신청 요청</h1>
+			<h1>사업장 폐업 신청 요청서</h1>
 			<hr />
 		</div> <!-- .head -->
 		
@@ -273,19 +307,10 @@ input[type="radio"] {
 					사업장 번호
 				</div>
 				<div class="input_group">
-				    <input type="text" id="st_in_num" name="st_in_num">
+				    <input type="text" id="st_in_num" name="st_in_num" value="${out.st_place_num }" disabled="disabled">
 				    <%-- <input type="hidden" class="check_num" id="check_num" value="${placeNum }"/> --%>
 				</div>
 			</div>
-			
-			
-			<!-- 폐업 사유 -->
-			<div class="igroup">
-				<div class="title">폐업사유</div>
-				<div class="content">
-					<textarea rows="" cols="" class="contentform" id="oContent" value="폐업사유" disabled="disabled"></textarea>
-				</div>
-			</div> <!-- .out_content -->
 			
 			
 			<c:if test="${param.state eq '미확인' }">
@@ -311,7 +336,7 @@ input[type="radio"] {
 			</c:if>
 			<c:if test="${param.state ne '미확인' }">
 				<br><br>
-				<div class="igroup" style="width: 100%; color: red; font-size: 20pt; text-align: center; width: 570px; margin: 0 auto;">
+				<div class="igroup" style="width: 100%; color: red; font-size: 20pt; text-align: center; width: 450px; margin: 0 auto;">
 					처리가 완료된 사업장 폐업 요청서 입니다.
 				</div>
 			</c:if>

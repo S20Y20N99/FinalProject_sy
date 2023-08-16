@@ -79,7 +79,7 @@
 	
 	<!-- 가게 등폐업 요청 가게 요청내용 가져오기 
 	등록 → 서류파일(사업자등록증파일,사업장관리증파일), 사업자등록번호, 사업장관리번호, 가게명, 가게주소, 가게상세주소, 가게번호
-	폐업 → 폐업사유, 폐업인증서류
+	폐업 → 사업장번호(ST_PLACE_NUM) OUT_APPLY_NUM
 	-->
 	<select id="inSearch" resultType="com.yameokja.mc.StoreregiDTO">
 		SELECT IA.REG_DATE AS REG_DATE, IA.ST_IN_NUM AS ST_IN_NUM, IA.ST_IN_FILE AS ST_IN_FILE
@@ -91,6 +91,17 @@
         ON IA.USER_NUM = UU.USER_NUM
         WHERE IN_APPLY_NUM = #{in_apply_num}
 	</select>
+	
+	<select id="outSearch" resultType="com.yameokja.mc.StoreregiDTO">
+		SELECT IA.ST_PLACE_NUM AS ST_PLACE_NUM
+		FROM IN_APPLY IA 
+		LEFT JOIN IN_PROCESS IP
+		ON IA.IN_APPLY_NUM = IP.IN_APPLY_NUM
+		LEFT JOIN OUT_APPLY OA
+		ON IP.IN_PROCESS_NUM = OA.IN_PROCESS_NUM
+		WHERE OUT_APPLY_NUM = #{out_apply_num}
+	</select>
+	
 	<!-- 관리자 읽은 날짜 업데이트 -->
 	<update id="rvupdate">
 	    UPDATE REP_APPLY
@@ -128,7 +139,10 @@
 	
 	</insert>
 	
-	
+	<insert id="inprocess">
+		INSERT INTO IN_PROCESS(IN_PROCESS_NUM, IN_APPLY_NUM, ADMIN_NUM, FINAL_DATE)
+		VALUES(INPROSEQ.NEXTVAL, #{in_apply_num}, #{admin_num}, SYSDATE)		
+	</insert>
 	
 		
 </mapper>

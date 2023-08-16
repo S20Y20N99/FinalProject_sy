@@ -60,7 +60,10 @@ public interface IStoreMainDAO
 	public int foodCatinsert(@Param("food_num")int food_num, @Param("st_num")int st_num);
 	public int menuinsert(@Param("st_num")int st_num, @Param("menu_name")String menu_name
 			, @Param("price")int price, @Param("image_link")String image_link);
-
+	/*
+	 * public int chBoxdeleteone(@Param("st_num")int st_num, @Param("chbox_num")int
+	 * chbox_num);
+	 */
 	
 	public ArrayList<Integer> rvReplyNumList(int st_num);
 	
@@ -69,7 +72,7 @@ public interface IStoreMainDAO
 
 	public int searchKeyinsert(@Param("st_num")int st_num, @Param("search_name")String search_name);
 	public int stsearchKeyUpdate(@Param("st_num")int st_num, @Param("search_name")String search_name);
-	public int searchKeyselect(@Param("st_num")int st_num, @Param("search_name")String search_name);
+	public Integer searchKeyselect(@Param("st_num")int st_num, @Param("search_name")String search_name);
 	public int stsearchKeyinsert(@Param("st_num")int st_num, @Param("search_num")int search_num);
 	public int stsearchKeyselect(@Param("st_num")int st_num, @Param("search_num")int search_num);
 	

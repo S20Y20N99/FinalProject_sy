@@ -770,11 +770,11 @@ $(document).ready(function(){
 									<c:forEach var="paylabel" items="${payLabel }">
 										<c:choose>
 											<c:when test="${fn:contains(stPayList, paylabel.pay_name)}">
-												<input type="checkbox" id="paych${paylabel.pay_num }" name="pay" checked="checked" value="${paylabel.pay_name }">
+												<input type="checkbox" id="paych${paylabel.pay_num }" name="pay" checked="checked" value="${paylabel.pay_num }">
 												<label for="paych${paylabel.pay_num }">${paylabel.pay_name }</label>
 											</c:when>
 											<c:otherwise>
-												<input type="checkbox" id="paych${paylabel.pay_num }" name="pay" value="${paylabel.pay_name }">
+												<input type="checkbox" id="paych${paylabel.pay_num }" name="pay" value="${paylabel.pay_num }">
 												<label for="paych${paylabel.pay_num }">${paylabel.pay_name }</label>
 											</c:otherwise>
 										</c:choose>
@@ -783,7 +783,7 @@ $(document).ready(function(){
 								<c:if test="${fn:length(stPayList) == 0}">
 									<c:forEach var="paylabel" items="${payLabel }">
 										
-										<input type="checkbox" id="paych${paylabel.pay_num }" name="pay" value="${paylabel.pay_name }">
+										<input type="checkbox" id="paych${paylabel.pay_num }" name="pay" value="${paylabel.pay_num }">
 										<label for="paych${paylabel.pay_num }">${paylabel.pay_name }</label>
 										
 									</c:forEach>
@@ -838,32 +838,30 @@ $(document).ready(function(){
 							<td></td>
 							<c:choose>
 								<c:when test="${fn:length(menuLists) == 0}">
-									<c:forEach begin="0" end="1" varStatus="status">
-										<td>
-									    	<div class="button">
-												<label for="file${status.index }">
-													👉 음식 사진 업로드 👈
-												</label>
-										    </div>
-										    	<input type="file" class="menuFile" id="file${status.index }" name="file${status.index }" accept="image/*" onchange="loadFile(this)" style="visibility: hidden;">
-										    <div id="image-show${status.index}"></div>
-										    <p id="fileName${status.index}" style="font-size: small"></p>
-											<label id="label menu_label">
-												<p class="menu-label-txt" style="position: absolute;">메뉴이름</p>
-												<input type="text" class="input" name="file${status.index }m" value="">
-												<div class="line-box" style="width:60%;">
-												    <div class="line"></div>
-												</div>
+									<td>
+								    	<div class="button">
+											<label for="file0">
+												👉 음식 사진 업로드 👈
 											</label>
-											<label id="label menu_label">
-												<p class="menu-label-txt" style="position: absolute;">가격</p>											
-												<input type="text" class="input" name="file${status.index }p" value="">
-												<div class="line-box" style="width:60%;">
-												    <div class="line"></div>
-												</div>
-											</label>
-										</td>
-									</c:forEach>
+									    </div>
+									    	<input type="file" class="menuFile" id="file0" name="file0" accept="image/*" onchange="loadFile(this)" style="visibility: hidden;">
+									    <div id="image-show0"></div>
+									    <p id="fileName0" style="font-size: small"></p>
+										<label id="label menu_label">
+											<p class="menu-label-txt" style="position: absolute;">메뉴이름</p>
+											<input type="text" class="input" name="file0m" value="">
+											<div class="line-box" style="width:60%;">
+											    <div class="line"></div>
+											</div>
+										</label>
+										<label id="label menu_label">
+											<p class="menu-label-txt" style="position: absolute;">가격</p>											
+											<input type="text" class="input" name="file0p" value="">
+											<div class="line-box" style="width:60%;">
+											    <div class="line"></div>
+											</div>
+										</label>
+									</td>
 								</c:when>
 								<c:otherwise>
 									<c:forEach var="menu" items="${menuLists }" varStatus="status">

@@ -28,16 +28,16 @@
 	{
 		$(".inTd").click(function()
 		{
-			var inNum = $(this).attr("id");
-			/* alert(inNum); */
+			var idNum = $(this).attr("id");
+			/* alert(idNum); */
 			var state = $(this).parent().attr('id');
 			var catValue = $(this).siblings("td:first-child").text();
 			//alert(catValue);
 			
 			if(catValue=="등록")
-				$(location).attr("href","inapplyform.action?in_apply_num="+inNum+"&state="+state);
+				$(location).attr("href","inapplyform.action?in_apply_num="+idNum+"&state="+state);
 			else
-				$(location).attr("href","outapplyform.action?in_apply_num="+inNum+"&state="+state);
+				$(location).attr("href","outapplyform.action?out_apply_num="+idNum+"&state="+state);
 		});
 	});
 	

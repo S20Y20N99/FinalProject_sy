@@ -131,8 +131,8 @@ public class StoreregiController
                 {
                 	if (item.getFieldName().equals("st_in_num"))
                 	{
-                		String tmpStr = item.getString(CHARSET);
-                		int st_in_num = Integer.parseInt(tmpStr.substring(0, tmpStr.length()));
+                		System.out.println(item.getString(CHARSET));
+                		int st_in_num = Integer.parseInt(item.getString(CHARSET));
                 		srdto.setSt_in_num(st_in_num);
                 	}
                 	else if (item.getFieldName().equals("st_place_num"))

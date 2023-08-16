@@ -131,7 +131,7 @@
 	</delete>
 	<insert id="bOCinsert">
 		INSERT INTO BREAKTIME(BREAKTIME_NUM, ST_NUM, WEEK_WEEKEND_NUM, START_BREAKTIME, END_BREAKTIME)
-		VALUES(BREAKTIMESEQ.NEXTVAL, #{st_num}, #{week_weekend_num}
+		VALUES(BREAKTIMESEQ.NEXTVAL+100, #{st_num}, #{week_weekend_num}
 		, #{start_breaktime, jdbcType=VARCHAR}, #{end_breaktime, jdbcType=VARCHAR})
 	</insert>
 	
@@ -142,7 +142,7 @@
 	</delete>
 	<insert id="holidayinsert">
 		INSERT INTO ST_HOLIDAY(HOLIDAY_NUM, DAY_NUM, ST_NUM)
-		VALUES(HOLIDAYSEQ.NEXTVAL, #{day_num}, #{st_num})
+		VALUES(HOLIDAYSEQ.NEXTVAL+100, #{day_num}, #{st_num})
 	</insert>
 	
 	<delete id="paysdelete">
@@ -152,7 +152,7 @@
 	</delete>
 	<insert id="paysinsert">
 		INSERT INTO ST_PAY(ST_PAY_NUM, PAY_NUM, ST_NUM)
-		VALUES(PAYSEQ.NEXTVAL, #{pay_num}, #{st_num})
+		VALUES(PAYSEQ.NEXTVAL+100, #{pay_num}, #{st_num})
 	</insert>
 	
 	<delete id="chBoxdelete">
@@ -162,7 +162,7 @@
 	</delete>
 	<insert id="chBoxinsert">
 		INSERT INTO ST_CHBOX(ST_CHBOX_NUM, ST_NUM, CHBOX_NUM, YN_NUM)
-		VALUES(CHBOXSEQ.NEXTVAL, #{st_num}, #{chbox_num}, #{yn_num})
+		VALUES(CHBOXSEQ.NEXTVAL+100, #{st_num}, #{chbox_num}, #{yn_num})
 	</insert>
 	<select id="chBoxselect" resultType="java.lang.Integer">
 		SELECT COUNT(*)
@@ -171,16 +171,24 @@
 		  AND CHBOX_NUM = #{chbox_num}
 	</select>
 	<update id="chBoxupdate">
+	    UPDATE ST_CHBOX
+	  	SET YN_NUM = #{yn_num, jdbcType=INTEGER}
+	    WHERE ST_NUM = #{st_num}
+	    AND CHBOX_NUM = #{chbox_num}
+	</update>
+	<!-- <update id="chBoxupdate">
 		UPDATE ST_CHBOX
-		<if test='yn_num eq -1'>
-		SET YN_NUM = #{jdbcType=INTEGER}
-		</if>
-		<if test='yn_num  ne "num"'>
 		SET YN_NUM = #{yn_num, jdbcType=INTEGER}
-		</if>
 		WHERE ST_NUM = #{st_num}
 		  AND CHBOX_NUM = #{chbox_num}
-	</update>
+	</update> -->
+	<!-- <delete id="chBoxdeleteone">
+		DELETE
+		FROM ST_CHBOX
+		WHERE ST_NUM = #{st_num}
+		  AND CHBOX_NUM = #{chbox_num}
+	</delete> -->
+	
 	
 	<delete id="stKeysdelete">
 		DELETE
@@ -189,7 +197,7 @@
 	</delete>
 	<insert id="stKeysinsert">
 		INSERT INTO ST_KEY(ST_CHOSEN_KEY_NUM, ST_NUM, ST_KEY_NUM)
-		VALUES(STSKSEQ.NEXTVAL, #{st_num}, #{st_key_num})
+		VALUES(STSKSEQ.NEXTVAL+100, #{st_num}, #{st_key_num})
 	</insert>
 	
 	<delete id="foodCatdelete">
@@ -199,7 +207,7 @@
 	</delete>
 	<insert id="foodCatinsert">
 		INSERT INTO ST_FOOD(ST_FOOD_NUM, FOOD_NUM, ST_NUM)
-		VALUES(FOODSEQ.NEXTVAL, #{food_num}, #{st_num})
+		VALUES(FOODSEQ.NEXTVAL+100, #{food_num}, #{st_num})
 	</insert>
 	
 	<delete id="menudelete">
@@ -209,7 +217,7 @@
 	</delete>
 	<insert id="menuinsert">
 		INSERT INTO MENU(MENU_NUM, ST_NUM, MENU_NAME, PRICE, IMAGE_LINK)
-		VALUES(MENUSEQ.NEXTVAL, #{st_num}, #{menu_name}, #{price}, #{image_link, jdbcType=VARCHAR})
+		VALUES(MENUSEQ.NEXTVAL+100, #{st_num}, #{menu_name}, #{price}, #{image_link, jdbcType=VARCHAR})
 	</insert>
 	
 	<delete id="stsearchKeydelete">
@@ -219,7 +227,7 @@
 	</delete>
 	<insert id="searchKeyinsert">
 		INSERT INTO SEARCH_KEY(SEARCH_NUM, ST_NUM, SEARCH_NAME, COUNT)
-		VALUES(SEARCHKEYSEQ.NEXTVAL, #{st_num}, #{search_name}, DEFAULT)
+		VALUES(SEARCHKEYSEQ.NEXTVAL+100, #{st_num}, #{search_name}, DEFAULT)
 	</insert>
 	<update id="stsearchKeyUpdate">
 		UPDATE SEARCH_KEY
@@ -228,7 +236,7 @@
 		  AND SEARCH_NAME = #{search_name}
 	</update>
 	<select id="searchKeyselect" resultType="java.lang.Integer">
-		SELECT NVL(COUNT(SEARCH_NUM), -1)
+		SELECT SEARCH_NUM
 		FROM SEARCH_KEY
 		WHERE ST_NUM = #{st_num}
 		  AND SEARCH_NAME= #{search_name}

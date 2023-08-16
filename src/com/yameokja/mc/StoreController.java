@@ -560,14 +560,50 @@ public class StoreController
             {
                 if (item.isFormField())
                 {
-                	if(item.getFieldName().substring(0, 4).equals("file"))
+                	if(item.getFieldName().length() > 4 && item.getFieldName().substring(0, 4).equals("file"))
                 	{
 	                   	if(menuMap.keySet().contains(item.getFieldName().substring(0, item.getFieldName().length()-1)))
 	                	{
-	                		if (item.getFieldName().substring(item.getFieldName().length()-1).equals("m"))
-	                			menuMap.get(item.getFieldName().substring(0, 4)).setMenu_name(item.getString(CHARSET)); 
+	                		/*if (item.getFieldName().substring(item.getFieldName().length()-1).equals("m"))
+	                		{
+	                			if (item.getString(CHARSET) != null)
+	                				menuMap.get(item.getFieldName().substring(0, 4)).setMenu_name(item.getString(CHARSET));
+	                		}
+	                			 
 	                		else if (item.getFieldName().substring(item.getFieldName().length()-1).equals("p"))
-	                			menuMap.get(item.getFieldName().substring(0, 4)).setPrice(Integer.parseInt(item.getString(CHARSET)));
+	                		{
+	                			if (item.getString(CHARSET) != null)
+	                				menuMap.get(item.getFieldName().substring(0, 4)).setPrice(Integer.parseInt(item.getString(CHARSET)));
+	                		}*/
+	                		
+	                		if (item.getFieldName().endsWith("m"))
+	                		{
+	                		    String fieldNamePrefix = item.getFieldName().substring(0, item.getFieldName().length() - 1);
+
+	                		    if (item.getString(CHARSET) != null) {
+	                		        String menuName = item.getString(CHARSET);
+	                		        if (menuMap.containsKey(fieldNamePrefix)) {
+	                		            menuMap.get(fieldNamePrefix).setMenu_name(menuName);
+	                		        }
+	                		    }
+	                		}
+	                		else if (item.getFieldName().endsWith("p"))
+	                		{
+	                		    String fieldNamePrefix = item.getFieldName().substring(0, item.getFieldName().length() - 1);
+
+	                		    if (item.getString(CHARSET) != null) {
+	                		        String priceStr = item.getString(CHARSET);
+	                		        try {
+	                		            int price = Integer.parseInt(priceStr);
+	                		            if (menuMap.containsKey(fieldNamePrefix)) {
+	                		                menuMap.get(fieldNamePrefix).setPrice(price);
+	                		            }
+	                		        } catch (NumberFormatException e) {
+	                		            // 예외 처리: 숫자로 변환할 수 없는 경우
+	                		        }
+	                		    }
+	                		}
+	                			
 	                	}
 	                   	else
 	                   	{
@@ -698,18 +734,30 @@ public class StoreController
                    	}
                    	else if(item.getFieldName().equals("chBoxO"))
                    	{
+                   		System.out.println(item.getString(CHARSET));
                    		for (String chb : item.getString(CHARSET).split(","))
                    		{
                    			System.out.println(chb);
-                   			
-                   			int chbNum = Integer.parseInt(chb);
-                   			
-                   			if (smdao.chBoxselect(st_num, chbNum) == 0)
-                   				smdao.chBoxinsert(st_num, chbNum, 1);
-                   			else
+                   			if (!chb.equals(null))
                    			{
-                   				smdao.chBoxupdate(1, st_num, chbNum);
+                   				try
+                   				{
+                   					int chbNum = Integer.parseInt(chb);
+                           			
+                           			if (smdao.chBoxselect(st_num, chbNum) == 0)
+                           				smdao.chBoxinsert(st_num, chbNum, 1);
+                           			else
+                           			{
+                           				smdao.chBoxupdate(1, st_num, chbNum);
+                           			}
+                		        }
+                   				catch (NumberFormatException e)
+                   				{
+                		            // 예외 처리: 숫자로 변환할 수 없는 경우
+                		        }
+                   				
                    			}
+                   			
                    		}
                    	}
                    	else if(item.getFieldName().equals("chBoxX"))
@@ -717,18 +765,29 @@ public class StoreController
                    		for (String chb : item.getString(CHARSET).split(","))
                    		{
                    			System.out.println(chb);
-                   			
-                   			int chbNum = Integer.parseInt(chb);
-                   			
-                   			if (smdao.chBoxselect(st_num, chbNum) == 0)
-                   				smdao.chBoxinsert(st_num, chbNum, 2);
-                   			else
+                   			if (!chb.equals(null))
                    			{
-                   				smdao.chBoxupdate(2, st_num, chbNum);
-                   			}                 			
+                   				try
+                   				{
+                   					int chbNum = Integer.parseInt(chb);
+                           			
+                           			if (smdao.chBoxselect(st_num, chbNum) == 0)
+                           				smdao.chBoxinsert(st_num, chbNum, 2);
+                           			else
+                           			{
+                           				smdao.chBoxupdate(2, st_num, chbNum);
+                           			} 
+                		        }
+                   				catch (NumberFormatException e)
+                   				{
+                		            // 예외 처리: 숫자로 변환할 수 없는 경우
+                		        }
+                   				
+                   			}
+                   			                			
                    		}
                    	}
-                   	else if(item.getFieldName().equals("uncheck"))
+                   /*	else if(item.getFieldName().equals("uncheck"))
                    	{
                    		for (String chb : item.getString(CHARSET).split(","))
                    		{
@@ -740,7 +799,7 @@ public class StoreController
                    				smdao.chBoxupdate(-1, st_num, chbNum);
                    			
                    		}
-                   	}
+                   	}*/
                    	else if(item.getFieldName().equals("stKeys"))
                    	{
                    		for (String stk : item.getString(CHARSET).split(","))
@@ -769,22 +828,28 @@ public class StoreController
                    	}
                    	else if(item.getFieldName().equals("searchKey"))
                    	{
-                   		String searchkey = item.getString(CHARSET);
-                   		int searchNum = smdao.searchKeyselect(st_num, searchkey);
-                   		
-                   		if (searchNum == -1)
+                   		if (item.getString(CHARSET).length() > 0)
                    		{
-                   			smdao.searchKeyinsert(st_num, searchkey);
-                   			searchNum = smdao.searchKeyselect(st_num, searchkey);
-                   			smdao.stsearchKeyinsert(st_num, searchNum);
-                   		}
-                   		else
-                   		{
-                   			if (smdao.stsearchKeyselect(st_num, searchNum) == 0)
-                   			{
-                   				smdao.stsearchKeyUpdate(st_num, searchkey);
-                   				smdao.stsearchKeyinsert(st_num, searchNum);
-                   			}
+	                   		String searchkey = item.getString(CHARSET);
+	                   		Integer searchNum = smdao.searchKeyselect(st_num, searchkey);
+	                   		
+	                   		if (searchNum == null)
+	                   		{
+	                   			smdao.searchKeyinsert(st_num, searchkey);
+	                   			searchNum = smdao.searchKeyselect(st_num, searchkey);
+	                   			smdao.stsearchKeyinsert(st_num, searchNum);
+	                   		}
+	                   		else
+	                   		{
+	                   			// 검색된 값이 있는 경우 처리
+	                   		    int search_num = searchNum.intValue(); // Integer를 int로 변환
+	                   		    
+	                   			if (smdao.stsearchKeyselect(st_num, searchNum) == 0)
+	                   			{
+	                   				smdao.stsearchKeyUpdate(st_num, searchkey);
+	                   				smdao.stsearchKeyinsert(st_num, searchNum);
+	                   			}
+	                   		}
                    		}
                    	}
                 }

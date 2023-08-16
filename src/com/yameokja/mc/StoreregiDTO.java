@@ -11,6 +11,7 @@ public class StoreregiDTO
 	
 	private String in_file_name, place_file_name;
 	
+	
 	// getter / setter
 	public String getUser_num()
 	{
