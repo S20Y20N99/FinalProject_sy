@@ -5,7 +5,10 @@
 	<select id="searchStoreInfo" resultType="com.yameokja.mc.StoreDTO">
 		SELECT ST_NUM, ST_NAME
 		FROM STORE_VIEW
-		WHERE USER_NUM = #{user_num}
+        WHERE IN_PROCESS_NUM NOT IN (SELECT IN_PROCESS_NUM
+                                    FROM OUT_PROCESS OP LEFT JOIN OUT_APPLY OA
+                                    ON OP.OUT_APPLY_NUM = OA.OUT_APPLY_NUM)
+          AND USER_NUM = #{user_num}
 		ORDER BY REG_DATE DESC
 	</select>
 	
@@ -29,7 +32,7 @@
 		                   ON RKL.RV_KEY_NUM = RK.RV_KEY_NUM
 		                   LEFT JOIN ST_LIST SL
 		                       ON RK.ST_NUM = SL.ST_NUM
-		WHERE SL.ST_NUM = #{st_num} OR SL.ST_NUM IS NULL
+		WHERE SL.ST_NUM = #{st_num}
 		ORDER BY RK.COUNT DESC
 	</select>
 	

@@ -85,7 +85,6 @@ public class StoreController
 			rv_data.add(String.valueOf(hashMap.get("COUNT_RV_KEY")));
 		}
 		
-		
 		ArrayList<HashMap<String, String>> star_transition = smDao.star_transition(st_num);
 		
 		ArrayList<String> star_labels = new ArrayList<String>();
@@ -115,8 +114,10 @@ public class StoreController
 		
 		model.addAttribute("st_list", st_list);
 		
-		model.addAttribute("rv_labels", rv_labels.subList(0, 5));
-		model.addAttribute("rv_data", rv_data.subList(0, 5));
+		if (rv_labels.size() > 0)
+			model.addAttribute("rv_labels", rv_labels.subList(0, 5));
+		if (rv_data.size() > 0)
+			model.addAttribute("rv_data", rv_data.subList(0, 5));
 		
 		model.addAttribute("star_labels", star_labels);
 		model.addAttribute("star_data", star_data);
