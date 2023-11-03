@@ -48,12 +48,20 @@ public interface IAdminFindDAO
 	public int reqRej(@Param("req_process_num") int req_process_num, @Param("rej_rs") String rej_rs);
 	//이의제기 승인
 	public int objProcess(@Param("obj_apply_num")int obj_apply_num, @Param("admin_num")int admin_num);
+	//이의제기 승인 시 패널티 삭제
+	public int delPenalty(@Param("obj_process_num")int obj_process_num);
 	//OBJ_PROCESS_NUM 찾기
 	public int searchOpNum(int obj_apply_num);
 	//이의제기 반려
-	public int objRej(@Param("rej_rs")String rej_rs, @Param("obj_apply_num")int obj_apply_num);
+	public int objRej(@Param("rej_rs")String rej_rs, @Param("obj_process_num")int obj_process_num);
 	//처리 결과 변경
 	public int reverseRs(@Param("reverse_rs")String reverse_rs, @Param("obj_process_num")int obj_processs_num);
+	//패널티회수요청 승인
+	public int revoProcess(@Param("revo_apply_num")int revo_apply_num, @Param("admin_num")int admin_num);
+	//REVO_PROCESS_NUM 찾기
+	public int searchRpNum(int revo_apply_num);
+	//패널티회수 요청 반려
+	public int revoRej(@Param("rej_rs")String rej_rs, @Param("revo_process_num")int revo_process_num);
 	
 	
 	

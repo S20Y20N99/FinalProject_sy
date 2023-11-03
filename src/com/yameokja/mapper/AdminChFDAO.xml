@@ -242,6 +242,18 @@
 		VALUES(OBJPROSEQ.NEXTVAL, #{obj_apply_num}, SYSDATE, #{admin_num})
 	</insert>
 	
+	<!-- 이의 제기 승인 시 패널티 삭제 -->
+	<delete id="delPenalty">
+		DELETE
+		FROM PENALTY
+		WHERE REQ_PROCESS_NUM = (SELECT OA.REQ_PROCESS_NUM
+		                         FROM OBJ_PROCESS OP LEFT JOIN OBJ_APPLY OA
+		                         ON OP.OBJ_APPLY_NUM = OA.OBJ_APPLY_NUM
+		                         WHERE OP.OBJ_PROCESS_NUM NOT IN (SELECT OBJ_PROCESS_NUM
+		                                                          FROM OBJ_REJ)
+		                         AND OP.OBJ_PROCESS_NUM = #{obj_process_num})
+	</delete>
+	
 	<!-- 이의제기 obj_process_num 찾기 -->
 	<select id="searchOpNum" resultType="java.lang.Integer">
 		SELECT OBJ_PROCESS_NUM
@@ -259,6 +271,25 @@
 	<insert id="reverseRs">
 		INSERT INTO APPLY_REVERSE(APPLY_REVERSE_NUM, REVERSE_RS, OBJ_PROCESS_NUM)
 		VALUES(REVERSEQ.NEXTVAL, #{reverse_rs}, #{obj_process_num})
+	</insert>
+	
+	<!-- 패널티 회수 요청 승인 -->
+	<insert id="revoProcess">
+		INSERT INTO REVO_PROCESS(REVO_PROCESS_NUM, REVO_APPLY_NUM, FINAL_DATE, ADMIN_NUM)
+		VALUES(REVORPOSEQ.NEXTVAL, #{revo_apply_num}, SYSDATE, #{admin_num})
+	</insert>
+	
+	<!-- 패널티회수요청 revo_process_num 찾기 -->
+	<select id="searchRpNum" resultType="java.lang.Integer">
+		SELECT REVO_PROCESS_NUM
+		FROM REVO_PROCESS
+		WHERE REVO_APPLY_NUM = #{revo_apply_num}
+	</select>
+	
+	<!-- 패널티 회수 요청 반려 -->
+	<insert id="revoRej">
+		INSERT INTO REVO_REJ(REVO_REJ_NUM, REJ_RS, REVO_PROCESS_NUM)
+		VALUES(REVOREJSEQ.NEXTVAL, #{rej_rs}, #{revo_process_num})
 	</insert>
 	
 	<insert id="inprocess">

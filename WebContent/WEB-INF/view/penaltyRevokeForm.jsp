@@ -230,7 +230,11 @@ input[type="radio"]
 					$("#myTextarea").focus();
 					return;
 				}
+				$("#checklabel").val("true");
 			}
+			
+			$("#adminForm").attr("action", "revopro.action");
+			$("#adminForm").submit();
 			
 		});
 	});
@@ -247,6 +251,7 @@ input[type="radio"]
 	<div class="middle">
 		<div class="top">
 			<h1>패널티 회수 신청서</h1>
+			<input type="hidden" name="revo_num" id="revo_num" value=<%=dto.getRevo_apply_num() %>/>
 			<hr>
 		</div>
 		
@@ -309,6 +314,7 @@ input[type="radio"]
 					<br><br>
 					<div class="sendBtn">
 						<input type="button" class="sendResult" value="처리 하기">
+						<input type="hidden" id="checklabel" name="checklabel">
 					</div>
 				</c:if>
 				
