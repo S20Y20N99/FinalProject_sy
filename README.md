@@ -2,6 +2,9 @@
 <h2>[2023] <i>Yameokja, Uddae</i> (야먹자, 어때)🍚</h2>
 <h4>맛집에 대한 정확한 정보를 제공하며 여러 맛집을 한눈에 비교할 수 있는 웹사이트입니다.</h4>
 </div>
+
+
+#### - 🔗 웹 포트폴리오 링크 : [바로가기](https://drive.google.com/file/d/1YIM1IcEG2j-fzfptmPOfiTVf4VRHw1kZ/view?usp=sharing, "웹 포트폴리오 보러가기")
 <br>
 
 ## 목차
@@ -12,7 +15,7 @@
 
 ## 개요
 - 📌프로젝트 이름 : *Yameokja, Uddae* 🍚
-- 📅프로젝트 기간 : 2023.07 ~ 2023.10
+- 📅프로젝트 기간 : 2023.07 ~ 2023.09 (+α ~ 2023.10)
 - ⌨️언어 : <img src="https://img.shields.io/badge/java-007396?style=flat-square&logo=java&logoColor=white"/>
 - 🔌DB : <img src="https://img.shields.io/badge/oracle-F80000?style=flat-square&logo=oracle&logoColor=white">
 - 💻사용 기술 : ***Spring Framework, Mybatis, jQuery, Ajax, Jsp, Servlet***
